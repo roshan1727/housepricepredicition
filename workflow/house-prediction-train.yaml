@@ -22,10 +22,10 @@ spec:
 
   - name: house_price
     container:
-      image: docker.io/python:latest
-      command:
-        - python3
-        - '-c'
+      image: docker.io/roshan1727/house-price:03 # Your docker image name
+      command: ["/bin/sh", "-c"]
+      env:
+        - name: House_Prediction_test_sample # name of the environment variable inside Docker container
+          value: "3" # will make it as variable later
       args:
-       - |
-        print("Hello my name rakesh started to work on house price prediction")
+        - "python /app/src/main.py"
