@@ -9,8 +9,10 @@ metadata:
     executables.ai.sap.com/name: "Hello Pipeline"
   labels:
     scenarios.ai.sap.com/id: "learning"
-    ai.sap.com/version: "1.0"
+    ai.sap.com/version: "2.0"
 spec:
+  imagePullSecrets:
+    -name:roshan1727
   entrypoint: mypipeline
   templates:
   - name: mypipeline
