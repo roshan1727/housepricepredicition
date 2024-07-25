@@ -1,31 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: house-prediction-train # Executable ID (max length 64 lowercase-hyphen-separated), please modify this to any value if you are not the only user of your SAP AI Core instance. Example: `first-pipeline-1234`
+  name: house-prediction-train
   annotations:
-    scenarios.ai.sap.com/description: "house-prediction-train"
-    scenarios.ai.sap.com/name: "HOUSEPRICE_PREDICTION"
-    executables.ai.sap.com/description: "trying to start a fresh flow on how to predict the hosue prediction"
-    executables.ai.sap.com/name: "HOUSEPRICE_PREDICTION Pipeline"
+    scenarios.ai.sap.com/description: "Training pipeline for house price prediction model"
+    scenarios.ai.sap.com/name: "House Price Prediction"
+    executables.ai.sap.com/description: "Pipeline for training a machine learning model to predict house prices"
+    executables.ai.sap.com/name: "House Price Prediction Pipeline"
+    artifacts.ai.sap.com/housedataset.kind: "dataset"
   labels:
     scenarios.ai.sap.com/id: "learning"
     ai.sap.com/version: "3.0"
 spec:
   imagePullSecrets:
-    -name:roshan1727
+    - name: roshan1727 # Replace with your Docker registry secret name
   entrypoint: mypipeline
   templates:
-  - name: mypipeline
-    steps:
-    - - name: hp_start
-        template: house_price
+    - name: mypipeline
+      steps:
+        - - name: start-house-prediction
+            template: house_price
 
-  - name: house_price
-    container:
-      image: docker.io/roshan1727/house-price:03 # Your docker image name
-      command: ["/bin/sh", "-c"]
-      env:
-        - name: House_Prediction_test_sample # name of the environment variable inside Docker container
-          value: "3" # will make it as variable later
-      args:
-        - "python /app/src/main.py"
+    - name: house_price
+      container:
+        image: docker.io/roshan1727/house-price:03
+        command: ["/bin/sh", "-c"]
+        env:
+          - name: DT_MAX_DEPTH
+            value: "3"
+        args:
+          - "python /app/src/main.py"
