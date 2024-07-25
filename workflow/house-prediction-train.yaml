@@ -6,10 +6,10 @@ metadata:
     scenarios.ai.sap.com/description: "house-prediction-train"
     scenarios.ai.sap.com/name: "HOUSEPRICE_PREDICTION"
     executables.ai.sap.com/description: "trying to start a fresh flow on how to predict the hosue prediction"
-    executables.ai.sap.com/name: "Hello Pipeline"
+    executables.ai.sap.com/name: "HOUSEPRICE_PREDICTION Pipeline"
   labels:
     scenarios.ai.sap.com/id: "learning"
-    ai.sap.com/version: "2.0"
+    ai.sap.com/version: "3.0"
 spec:
   imagePullSecrets:
     -name:roshan1727
