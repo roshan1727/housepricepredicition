@@ -15,6 +15,9 @@ spec:
   imagePullSecrets:
     - name: roshan1727 # Replace with your Docker registry secret name
   entrypoint: mypipeline
+  arguments:
+    parameters:
+      -name: DT_MAX_DEPTH
   templates:
     - name: mypipeline
       steps:
@@ -22,11 +25,18 @@ spec:
             template: house_price
 
     - name: house_price
+      metadata:
+        labels:
+          ai.sap.com/resourcePlan: starter
+      input:
+        artifacts:
+          -name: homedataset
+          path: /app/data/
       container:
         image: docker.io/roshan1727/house-price:03
         command: ["/bin/sh", "-c"]
         env:
           - name: DT_MAX_DEPTH
-            value: "3"
+            value: "{{workflow.parameters.DT_MAX_DEPTH}}"
         args:
           - "python /app/src/main.py"
